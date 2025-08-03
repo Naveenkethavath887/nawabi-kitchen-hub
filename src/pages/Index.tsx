@@ -1,7 +1,7 @@
-import RestaurantDashboard from "@/components/RestaurantDashboard";
+import ResponsiveRestaurantDashboard from "@/components/ResponsiveRestaurantDashboard";
 
 const Index = () => {
-  return <RestaurantDashboard />;
+  return <ResponsiveRestaurantDashboard />;
 };
 
 export default Index;
