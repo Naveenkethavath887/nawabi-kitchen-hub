@@ -84,7 +84,7 @@ const ResponsiveRestaurantDashboard = () => {
           onCloseMobile={handleCloseMobileMenu}
         />
         
-        <main className="flex-1 lg:ml-0">
+        <main className="flex-1 lg:ml-64">
           {renderMainContent()}
         </main>
       </div>
