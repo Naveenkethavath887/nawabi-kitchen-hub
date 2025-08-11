@@ -48,12 +48,24 @@ All colors MUST be HSL.
     --sidebar-accent: 120 65% 35%;
     --sidebar-accent-foreground: 0 0% 100%;
     
-    /* Responsive design tokens */
+    /* Responsive design tokens for better large screen experience */
     --mobile-header-height: 4rem;
-    --desktop-header-height: 4rem;
-    --sidebar-width: 16rem;
+    --desktop-header-height: 5rem;
+    --large-desktop-header-height: 6rem;
+    --sidebar-width: 18rem;
+    --large-sidebar-width: 20rem;
     --mobile-padding: 1rem;
-    --desktop-padding: 1.5rem;
+    --desktop-padding: 2rem;
+    --large-desktop-padding: 3rem;
+    
+    /* Typography scale for large screens */
+    --text-xs: 0.875rem;
+    --text-sm: 1rem;
+    --text-base: 1.125rem;
+    --text-lg: 1.25rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2rem;
+    --text-3xl: 2.5rem;
     
     /* Animation tokens */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
