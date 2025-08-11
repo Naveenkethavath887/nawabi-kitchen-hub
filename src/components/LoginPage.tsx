@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import biryaniImage1 from "@/assets/biryani-bg-1.jpg";
-import biryaniImage2 from "@/assets/biryani-bg-2.jpg";
+import chickenDumBiryani from "@/assets/chicken-dum-biryani.jpg";
+import chickenButterMasala from "@/assets/chicken-butter-masala.jpg";
+import corianderNaan from "@/assets/coriander-naan.jpg";
+import butterNaan from "@/assets/butter-naan.jpg";
 
 interface LoginPageProps {
   onLogin: (userName: string) => void;
@@ -16,7 +18,16 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
   const [password, setPassword] = useState("");
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
 
-  const backgroundImages = [biryaniImage1, biryaniImage2];
+  const backgroundImages = [chickenDumBiryani, chickenButterMasala, corianderNaan, butterNaan];
+
+  // Auto-slide images every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % backgroundImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,9 +52,6 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
     onLogin(name.trim());
   };
 
-  const switchBackground = () => {
-    setCurrentBgIndex((prev) => (prev + 1) % backgroundImages.length);
-  };
 
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4">
@@ -57,21 +65,9 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
         <div className="absolute inset-0 bg-black/60" />
       </div>
 
-      {/* Background Switch Button */}
-      <Button
-        onClick={switchBackground}
-        className="absolute top-4 right-4 z-10 bg-restaurant-green hover:bg-restaurant-green-dark"
-        size="sm"
-      >
-        Switch Background
-      </Button>
-
       {/* Login Card */}
       <Card className="w-full max-w-md bg-white/95 backdrop-blur-sm border-restaurant-green/20 shadow-2xl z-10">
         <CardHeader className="text-center space-y-4">
-          <div className="bg-restaurant-green text-white px-4 py-2 rounded-lg font-bold text-lg mx-auto w-fit">
-            POS
-          </div>
           <CardTitle className="text-2xl lg:text-3xl font-bold text-restaurant-green">
             Nawabi Hyderabad House
           </CardTitle>
