@@ -3,7 +3,12 @@ import ResponsiveHeader from "./ResponsiveHeader";
 import ResponsiveSidebar from "./ResponsiveSidebar";
 import ResponsiveMsgToKitchen from "./ResponsiveMsgToKitchen";
 
-const ResponsiveRestaurantDashboard = () => {
+interface ResponsiveRestaurantDashboardProps {
+  userName: string;
+  onLogout: () => void;
+}
+
+const ResponsiveRestaurantDashboard = ({ userName, onLogout }: ResponsiveRestaurantDashboardProps) => {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -74,6 +79,8 @@ const ResponsiveRestaurantDashboard = () => {
       <ResponsiveHeader 
         isMobileMenuOpen={isMobileMenuOpen}
         onToggleMobileMenu={handleToggleMobileMenu}
+        userName={userName}
+        onLogout={onLogout}
       />
       
       <div className="flex relative">
