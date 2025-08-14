@@ -24,25 +24,25 @@ const ResponsiveRestaurantDashboard = ({ userName, onLogout }: ResponsiveRestaur
         return (
           <div className="p-6 lg:p-8 xl:p-10 max-w-7xl mx-auto">
             <div className="text-center lg:text-left">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-restaurant-green mb-6 lg:mb-8">
+              <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold text-restaurant-green mb-6 lg:mb-8">
                 Dashboard
               </h2>
               <div className="bg-card rounded-xl p-8 lg:p-10 xl:p-12 shadow-lg border">
-                <p className="text-muted-foreground text-lg lg:text-xl xl:text-2xl mb-8">
+                <p className="text-muted-foreground text-sm lg:text-base xl:text-lg mb-8">
                   Welcome to the restaurant management system.
                 </p>
                 <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                   <div className="bg-restaurant-green-light p-6 lg:p-8 rounded-xl text-center shadow-sm">
-                    <h3 className="font-semibold text-restaurant-green text-lg lg:text-xl xl:text-2xl">Today's Orders</h3>
-                    <p className="text-3xl lg:text-4xl xl:text-5xl font-bold text-restaurant-green-dark mt-3">24</p>
+                    <h3 className="font-semibold text-restaurant-green text-sm lg:text-base xl:text-lg">Today's Orders</h3>
+                    <p className="text-xl lg:text-2xl xl:text-3xl font-bold text-restaurant-green-dark mt-3">24</p>
                   </div>
                   <div className="bg-restaurant-green-light p-6 lg:p-8 rounded-xl text-center shadow-sm">
-                    <h3 className="font-semibold text-restaurant-green text-lg lg:text-xl xl:text-2xl">Active Tables</h3>
-                    <p className="text-3xl lg:text-4xl xl:text-5xl font-bold text-restaurant-green-dark mt-3">8</p>
+                    <h3 className="font-semibold text-restaurant-green text-sm lg:text-base xl:text-lg">Active Tables</h3>
+                    <p className="text-xl lg:text-2xl xl:text-3xl font-bold text-restaurant-green-dark mt-3">8</p>
                   </div>
                   <div className="bg-restaurant-green-light p-6 lg:p-8 rounded-xl text-center shadow-sm">
-                    <h3 className="font-semibold text-restaurant-green text-lg lg:text-xl xl:text-2xl">Revenue</h3>
-                    <p className="text-3xl lg:text-4xl xl:text-5xl font-bold text-restaurant-green-dark mt-3">₹12,450</p>
+                    <h3 className="font-semibold text-restaurant-green text-sm lg:text-base xl:text-lg">Revenue</h3>
+                    <p className="text-xl lg:text-2xl xl:text-3xl font-bold text-restaurant-green-dark mt-3">₹12,450</p>
                   </div>
                 </div>
               </div>
@@ -53,14 +53,14 @@ const ResponsiveRestaurantDashboard = ({ userName, onLogout }: ResponsiveRestaur
         return (
           <div className="p-6 lg:p-8 xl:p-10 max-w-7xl mx-auto">
             <div className="text-center lg:text-left">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-restaurant-green mb-6 lg:mb-8 capitalize">
+              <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold text-restaurant-green mb-6 lg:mb-8 capitalize">
                 {activeSection.replace('-', ' ')}
               </h2>
               <div className="bg-card rounded-xl p-8 lg:p-10 xl:p-12 shadow-lg border">
-                <p className="text-muted-foreground text-lg lg:text-xl xl:text-2xl mb-4">
+                <p className="text-muted-foreground text-sm lg:text-base xl:text-lg mb-4">
                   This section is under development.
                 </p>
-                <p className="text-base lg:text-lg text-muted-foreground">
+                <p className="text-xs lg:text-sm text-muted-foreground">
                   Feature coming soon to enhance your restaurant management experience.
                 </p>
               </div>
@@ -91,7 +91,7 @@ const ResponsiveRestaurantDashboard = ({ userName, onLogout }: ResponsiveRestaur
             </div>
             
             {/* Center Section - Welcome message */}
-            <div className="hidden md:block text-white font-semibold text-lg lg:text-xl xl:text-2xl">
+            <div className="hidden md:block text-white font-semibold text-sm lg:text-base xl:text-lg">
               WELCOME {userName.toUpperCase()}
             </div>
             
