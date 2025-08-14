@@ -57,27 +57,27 @@ export function AppSidebar({ activeItem, onItemSelect, userName }: AppSidebarPro
       <SidebarContent>
         {/* Welcome Message */}
         {!collapsed && (
-          <div className="p-6 border-b border-restaurant-green-dark">
-            <p className="text-white/90 text-base lg:text-lg font-medium">Welcome {userName}</p>
+          <div className="p-3 border-b border-restaurant-green-dark">
+            <p className="text-white/90 text-sm font-medium">Welcome {userName}</p>
           </div>
         )}
 
         <SidebarGroup>
-          <SidebarGroupLabel className="text-white/70 text-base lg:text-lg font-semibold px-6 py-4">Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-white/70 text-sm font-semibold px-3 py-2">Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-2 px-4">
+            <SidebarMenu className="space-y-1 px-2">
               {items.map((item) => (
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton 
                     onClick={() => onItemSelect(item.id)}
-                    className={`text-white hover:bg-restaurant-green-dark py-4 px-6 rounded-lg text-base lg:text-lg font-medium transition-all duration-200 ${
+                    className={`text-white hover:bg-restaurant-green-dark py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive(item.id) 
                         ? "bg-restaurant-green-dark font-semibold shadow-md" 
                         : "hover:shadow-sm"
                     }`}
                   >
-                    <item.icon className="h-6 w-6 lg:h-7 lg:w-7" />
-                    {!collapsed && <span className="ml-4">{item.title}</span>}
+                    <item.icon className="h-4 w-4" />
+                    {!collapsed && <span className="ml-2">{item.title}</span>}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

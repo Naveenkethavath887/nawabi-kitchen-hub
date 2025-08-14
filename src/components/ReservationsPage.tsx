@@ -60,83 +60,83 @@ const ReservationsPage = () => {
     <div className="p-4 lg:p-8 max-w-full mx-auto">
       <div className="bg-card rounded-xl shadow-lg border overflow-hidden">
         {/* Header */}
-        <CardHeader className="bg-restaurant-green text-white p-4">
-          <CardTitle className="text-2xl font-bold text-center">
+        <CardHeader className="bg-restaurant-green text-white p-3">
+          <CardTitle className="text-lg font-bold text-center">
             Table Reservations
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="p-4">
-          {/* Date and Customer Info Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-6">
+        <CardContent className="p-3">
+          {/* Date and Customer Info Section - Fixed at top */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 mb-4">
             {/* Date Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-foreground">
                 Date
               </label>
               <Select value={selectedDate} onValueChange={setSelectedDate}>
-                <SelectTrigger className="h-10">
+                <SelectTrigger className="h-8 text-sm">
                   <SelectValue />
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-3 w-3" />
                 </SelectTrigger>
                 <SelectContent>
                   {getWeekDates().map((date) => (
-                    <SelectItem key={date} value={date}>{date}</SelectItem>
+                    <SelectItem key={date} value={date} className="text-sm">{date}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             {/* First Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-foreground">
                 First Name
               </label>
               <Input
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Enter first name"
-                className="h-10"
+                placeholder="First name"
+                className="h-8 text-sm"
               />
             </div>
 
             {/* Last Name */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-foreground">
                 Last Name
               </label>
               <Input
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                placeholder="Enter last name"
-                className="h-10"
+                placeholder="Last name"
+                className="h-8 text-sm"
               />
             </div>
 
             {/* Phone Number */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-foreground">
                 Phone Number
               </label>
               <Input
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="Enter phone"
-                className="h-10"
+                placeholder="Phone number"
+                className="h-8 text-sm"
               />
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col gap-2 justify-end">
+            <div className="flex flex-col gap-1 justify-end">
               <Button 
-                className="h-10 font-semibold bg-restaurant-green hover:bg-restaurant-green-dark"
+                className="h-8 text-sm font-semibold bg-restaurant-green hover:bg-restaurant-green-dark"
                 disabled={!selectedSlot || !firstName || !lastName || !phoneNumber}
               >
                 CONFIRM
               </Button>
               <Button 
                 variant="outline" 
-                className="h-10 font-semibold border-2"
+                className="h-8 text-sm font-semibold"
                 onClick={() => {
                   setSelectedSlot(null);
                   setFirstName("");
@@ -149,18 +149,18 @@ const ReservationsPage = () => {
             </div>
           </div>
 
-          {/* Reservation Grid */}
-          <div className="border rounded-lg overflow-auto max-h-[600px]">
-            <div className="min-w-full">
-              {/* Time Header */}
-              <div className="grid grid-cols-[120px_repeat(40,minmax(80px,1fr))] bg-muted border-b sticky top-0 z-10">
-                <div className="p-2 font-semibold text-sm border-r bg-background sticky left-0 z-20">
+          {/* Reservation Grid - Only this section scrolls */}
+          <div className="border rounded-lg overflow-auto max-h-[500px]">
+            <div className="min-w-[2000px]">
+              {/* Time Header - Sticky */}
+              <div className="grid grid-cols-[80px_repeat(40,minmax(60px,1fr))] bg-muted border-b sticky top-0 z-10">
+                <div className="p-1 font-semibold text-xs border-r bg-background sticky left-0 z-20">
                   Table/Time
                 </div>
                 {timeSlots.map((time) => (
                   <div
                     key={time}
-                    className="p-2 text-center font-medium text-xs border-r last:border-r-0 bg-muted"
+                    className="p-1 text-center font-medium text-xs border-r last:border-r-0 bg-muted"
                   >
                     {time}
                   </div>
@@ -171,22 +171,22 @@ const ReservationsPage = () => {
               {tables.map((table) => (
                 <div
                   key={table}
-                  className="grid grid-cols-[120px_repeat(40,minmax(80px,1fr))] border-b last:border-b-0 hover:bg-muted/30"
+                  className="grid grid-cols-[80px_repeat(40,minmax(60px,1fr))] border-b last:border-b-0 hover:bg-muted/30"
                 >
-                  <div className="p-2 font-medium text-sm bg-background border-r sticky left-0 z-10">
+                  <div className="p-1 font-medium text-xs bg-background border-r sticky left-0 z-10">
                     {table}
                   </div>
                   {timeSlots.map((time) => (
                     <button
                       key={`${table}-${time}`}
                       onClick={() => handleSlotClick(table, time)}
-                      className={`p-1 border-r last:border-r-0 transition-colors hover:bg-restaurant-green-light min-h-[40px] ${
+                      className={`p-0.5 border-r last:border-r-0 transition-colors hover:bg-restaurant-green-light min-h-[30px] ${
                         isSlotSelected(table, time)
                           ? "bg-restaurant-green text-white"
                           : "bg-background hover:bg-restaurant-green/10"
                       }`}
                     >
-                      <div className="w-full h-6"></div>
+                      <div className="w-full h-4"></div>
                     </button>
                   ))}
                 </div>
@@ -196,8 +196,8 @@ const ReservationsPage = () => {
 
           {/* Selected Slot Info */}
           {selectedSlot && (
-            <div className="mt-4 p-4 bg-restaurant-green-light rounded-lg">
-              <p className="text-base font-medium text-restaurant-green-dark">
+            <div className="mt-3 p-2 bg-restaurant-green-light rounded-lg">
+              <p className="text-sm font-medium text-restaurant-green-dark">
                 Selected: {selectedSlot.replace('-', ' at ')}
               </p>
             </div>
