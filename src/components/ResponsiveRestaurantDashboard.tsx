@@ -85,7 +85,7 @@ const ResponsiveRestaurantDashboard = ({ userName, onLogout }: ResponsiveRestaur
             {/* Left Section */}
             <div className="flex items-center space-x-4 lg:space-x-6">
               <SidebarTrigger className="text-white hover:bg-white/10 p-2 lg:p-3" />
-              <h1 className="text-white font-bold text-lg lg:text-2xl xl:text-3xl truncate">
+              <h1 className="text-white font-bold text-base lg:text-lg xl:text-xl truncate">
                 Nawabi Hyderabad House
               </h1>
             </div>
