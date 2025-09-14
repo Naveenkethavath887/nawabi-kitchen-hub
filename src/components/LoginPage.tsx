@@ -42,9 +42,9 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
       return;
     }
     
-    // Simple password validation (any random number)
-    if (!/^\d+$/.test(password)) {
-      toast.error("Password must be a number");
+    // Check for shared password
+    if (password !== "Nawabi2025") {
+      toast.error("Incorrect password");
       return;
     }
     
@@ -100,14 +100,14 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter any number"
+                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="border-restaurant-green/20 focus:border-restaurant-green"
                 autoComplete="current-password"
               />
               <p className="text-xs text-muted-foreground">
-                For demo purposes, enter any number as password
+                Password: Nawabi2025
               </p>
             </div>
             
