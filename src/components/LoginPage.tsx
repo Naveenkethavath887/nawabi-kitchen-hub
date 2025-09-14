@@ -42,7 +42,7 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
       return;
     }
     
-    // Check for shared password
+    // Check for admin password (never display this in production)
     if (password !== "Nawabi2025") {
       toast.error("Incorrect password");
       return;
@@ -106,9 +106,6 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
                 className="border-restaurant-green/20 focus:border-restaurant-green"
                 autoComplete="current-password"
               />
-              <p className="text-xs text-muted-foreground">
-                Password: Nawabi2025
-              </p>
             </div>
             
             <Button 

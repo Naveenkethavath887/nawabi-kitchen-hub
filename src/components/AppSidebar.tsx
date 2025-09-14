@@ -31,7 +31,6 @@ const items = [
   { title: "New Dine IN", id: "new-dine-in", icon: Plus },
   { title: "Edit Dine IN", id: "edit-dine-in", icon: Edit },
   { title: "Delivery", id: "delivery", icon: Truck },
-  { title: "Menu", id: "menu", icon: UtensilsCrossed },
   { title: "Stock", id: "stock", icon: Package },
   { title: "Reports", id: "reports", icon: FileText },
   { title: "Administration", id: "administration", icon: Settings },

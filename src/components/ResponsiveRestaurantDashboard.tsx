@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import ResponsiveMsgToKitchen from "./ResponsiveMsgToKitchen";
 import ReservationsPage from "./ReservationsPage";
-import MenuPage from "./MenuPage";
+import TakeawayPage from "./TakeawayPage";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 
@@ -21,8 +21,8 @@ const ResponsiveRestaurantDashboard = ({ userName, onLogout }: ResponsiveRestaur
         return <ResponsiveMsgToKitchen />;
       case "reservations":
         return <ReservationsPage />;
-      case "menu":
-        return <MenuPage />;
+        case "take-away":
+          return <TakeawayPage isAdmin={true} />;
       case "dashboard":
         return (
           <div className="p-6 lg:p-8 xl:p-10 max-w-7xl mx-auto">
