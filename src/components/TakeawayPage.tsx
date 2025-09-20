@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { Search, Plus, Minus, ShoppingCart } from "lucide-react";
+import { Plus, Minus, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import type { TakeawayOrder, OrderItem } from "@/lib/supabase";
@@ -16,7 +16,7 @@ interface TakeawayPageProps {
 
 
 const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [cart, setCart] = useState<OrderItem[]>([]);
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -25,161 +25,161 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
     {
       title: "Veg Appetisers",
       items: [
-        "Onion Bajji",
-        "Gobi Manchurian", 
-        "Crispy Corn",
-        "Paneer Tikka",
-        "Chilly Paneer",
-        "Paneer 65"
+        { name: "Onion Bajji", price: "£6.95" },
+        { name: "Gobi Manchurian", price: "£7.95" }, 
+        { name: "Crispy Corn", price: "£6.95" },
+        { name: "Paneer Tikka", price: "£8.95" },
+        { name: "Chilly Paneer", price: "£8.95" },
+        { name: "Paneer 65", price: "£8.95" }
       ]
     },
     {
       title: "Non-Veg Appetisers",
       items: [
-        "Chicken Manchurian",
-        "65 Chicken",
-        "Chicken Lollipop",
-        "Chilly Chicken", 
-        "Chicken Tikka",
-        "Cashew Chicken",
-        "Prawns Tikka",
-        "Prawns Majestic",
-        "Lamb Chops"
+        { name: "Chicken Manchurian", price: "£8.95" },
+        { name: "65 Chicken", price: "£8.95" },
+        { name: "Chicken Lollipop", price: "£9.95" },
+        { name: "Chilly Chicken", price: "£8.95" }, 
+        { name: "Chicken Tikka", price: "£9.95" },
+        { name: "Cashew Chicken", price: "£10.95" },
+        { name: "Prawns Tikka", price: "£11.95" },
+        { name: "Prawns Majestic", price: "£12.95" },
+        { name: "Lamb Chops", price: "£13.95" }
       ]
     },
     {
       title: "Veg Main Course",
       items: [
-        "Dal Tadka",
-        "Kadai Mixed Veg",
-        "Paneer Tikka Masala",
-        "Paneer Butter Masala",
-        "Palak Paneer",
-        "Nizami Paneer",
-        "Chana Masala"
+        { name: "Dal Tadka", price: "£7.95" },
+        { name: "Kadai Mixed Veg", price: "£8.95" },
+        { name: "Paneer Tikka Masala", price: "£9.95" },
+        { name: "Paneer Butter Masala", price: "£9.95" },
+        { name: "Palak Paneer", price: "£9.95" },
+        { name: "Nizami Paneer", price: "£10.95" },
+        { name: "Chana Masala", price: "£7.95" }
       ]
     },
     {
       title: "Non-Veg Main Course", 
       items: [
-        "Chicken Tikka Masala",
-        "Chicken Butter Masala",
-        "Andhra Chicken Curry",
-        "Andhra Boneless Chicken Curry",
-        "Nizami Chicken Boneless",
-        "Lamb Curry",
-        "Lamb Pepper Fry",
-        "Prawn Curry",
-        "Nizami Prawns"
+        { name: "Chicken Tikka Masala", price: "£10.95" },
+        { name: "Chicken Butter Masala", price: "£10.95" },
+        { name: "Andhra Chicken Curry", price: "£9.95" },
+        { name: "Andhra Boneless Chicken Curry", price: "£10.95" },
+        { name: "Nizami Chicken Boneless", price: "£11.95" },
+        { name: "Lamb Curry", price: "£12.95" },
+        { name: "Lamb Pepper Fry", price: "£12.95" },
+        { name: "Prawn Curry", price: "£11.95" },
+        { name: "Nizami Prawns", price: "£12.95" }
       ]
     },
     {
       title: "Biryanis",
       items: [
-        "Nawabi Lamb Biryani",
-        "Prawns Biryani", 
-        "Hyderabadi Chicken Dum Biryani",
-        "Chicken Fry Piece Biryani",
-        "Paneer Biryani",
-        "Veg Biryani",
-        "Egg Biryani",
-        "Vijayawada Biryani",
-        "Ulavacharu Biryani",
-        "Avakai Biryani"
+        { name: "Nawabi Lamb Biryani", price: "£14.95" },
+        { name: "Prawns Biryani", price: "£13.95" }, 
+        { name: "Hyderabadi Chicken Dum Biryani", price: "£12.95" },
+        { name: "Chicken Fry Piece Biryani", price: "£12.95" },
+        { name: "Paneer Biryani", price: "£10.95" },
+        { name: "Veg Biryani", price: "£9.95" },
+        { name: "Egg Biryani", price: "£8.95" },
+        { name: "Vijayawada Biryani", price: "£11.95" },
+        { name: "Ulavacharu Biryani", price: "£11.95" },
+        { name: "Avakai Biryani", price: "£11.95" }
       ]
     },
     {
       title: "Tiffins",
       items: [
-        "Plain Dosa",
-        "Karam Dosa",
-        "Ghee Dosa",
-        "Masala Dosa / Onion Dosa",
-        "Plain Idly",
-        "Karam Idly", 
-        "Ghee Idly",
-        "Sambar Idly",
-        "Plain Vada",
-        "Perugu Vada",
-        "Sambar Vada",
-        "Uttapam",
-        "Poori + Aloo Pitala",
-        "Chole Batture",
-        "Idly Vada (Combo)"
+        { name: "Plain Dosa", price: "£4.95" },
+        { name: "Karam Dosa", price: "£5.95" },
+        { name: "Ghee Dosa", price: "£5.95" },
+        { name: "Masala Dosa / Onion Dosa", price: "£6.95" },
+        { name: "Plain Idly", price: "£3.95" },
+        { name: "Karam Idly", price: "£4.95" }, 
+        { name: "Ghee Idly", price: "£4.95" },
+        { name: "Sambar Idly", price: "£4.95" },
+        { name: "Plain Vada", price: "£3.95" },
+        { name: "Perugu Vada", price: "£4.95" },
+        { name: "Sambar Vada", price: "£4.95" },
+        { name: "Uttapam", price: "£5.95" },
+        { name: "Poori + Aloo Pitala", price: "£6.95" },
+        { name: "Chole Batture", price: "£6.95" },
+        { name: "Idly Vada (Combo)", price: "£5.95" }
       ]
     },
     {
       title: "Sides",
       items: [
-        "Plain Naan",
-        "Butter Naan",
-        "Garlic Naan",
-        "Onion Naan",
-        "Coriander Naan",
-        "Peshawari Naan",
-        "Roti",
-        "Butter Roti",
-        "Papadams",
-        "Egg Fried Rice",
-        "Plain Rice",
-        "Special Bagara Rice",
-        "Pilaf Rice"
+        { name: "Plain Naan", price: "£2.95" },
+        { name: "Butter Naan", price: "£3.45" },
+        { name: "Garlic Naan", price: "£3.95" },
+        { name: "Onion Naan", price: "£3.95" },
+        { name: "Coriander Naan", price: "£3.95" },
+        { name: "Peshawari Naan", price: "£4.45" },
+        { name: "Roti", price: "£2.45" },
+        { name: "Butter Roti", price: "£2.95" },
+        { name: "Papadams", price: "£1.95" },
+        { name: "Egg Fried Rice", price: "£4.95" },
+        { name: "Plain Rice", price: "£3.45" },
+        { name: "Special Bagara Rice", price: "£4.95" },
+        { name: "Pilaf Rice", price: "£4.45" }
       ]
     },
     {
       title: "Extras",
       items: [
-        "Curry Sauce",
-        "Chutney",
-        "Sambar",
-        "Glass of Milk",
-        "Ghee",
-        "Onion",
-        "Lemon Wedges",
-        "Aloo Masala",
-        "Karam",
-        "Poori 1pc",
-        "Idly 1pc",
-        "Vada 1pc",
-        "Dosa",
-        "Batture 1pc",
-        "Chole",
-        "Salan",
-        "Raita"
+        { name: "Curry Sauce", price: "£2.95" },
+        { name: "Chutney", price: "£1.95" },
+        { name: "Sambar", price: "£2.45" },
+        { name: "Glass of Milk", price: "£1.95" },
+        { name: "Ghee", price: "£0.95" },
+        { name: "Onion", price: "£0.50" },
+        { name: "Lemon Wedges", price: "£0.50" },
+        { name: "Aloo Masala", price: "£2.95" },
+        { name: "Karam", price: "£0.95" },
+        { name: "Poori 1pc", price: "£1.95" },
+        { name: "Idly 1pc", price: "£1.45" },
+        { name: "Vada 1pc", price: "£1.45" },
+        { name: "Dosa", price: "£4.95" },
+        { name: "Batture 1pc", price: "£1.95" },
+        { name: "Chole", price: "£2.95" },
+        { name: "Salan", price: "£2.95" },
+        { name: "Raita", price: "£2.45" }
       ]
     },
     {
       title: "Beverages",
       items: [
-        "Mango Lassi",
-        "Lime Soda",
-        "Coke",
-        "Pepsi",
-        "Sprite",
-        "7up",
-        "Thumsup",
-        "Limca",
-        "Sparkling Water",
-        "Plain Water",
-        "Special Nawabi Chai",
-        "Coffee"
+        { name: "Mango Lassi", price: "£3.95" },
+        { name: "Lime Soda", price: "£2.95" },
+        { name: "Coke", price: "£2.45" },
+        { name: "Pepsi", price: "£2.45" },
+        { name: "Sprite", price: "£2.45" },
+        { name: "7up", price: "£2.45" },
+        { name: "Thumsup", price: "£2.45" },
+        { name: "Limca", price: "£2.45" },
+        { name: "Sparkling Water", price: "£2.95" },
+        { name: "Plain Water", price: "£1.95" },
+        { name: "Special Nawabi Chai", price: "£2.95" },
+        { name: "Coffee", price: "£2.95" }
       ]
     },
     {
       title: "Desserts",
       items: [
-        "Double Ka Meeta",
-        "Gulab Jamun",
-        "Ice Cream"
+        { name: "Double Ka Meeta", price: "£4.95" },
+        { name: "Gulab Jamun", price: "£3.95" },
+        { name: "Ice Cream", price: "£3.45" }
       ]
     },
     {
       title: "Kids Menu",
       items: [
-        "Chicken Goujons",
-        "Chips",
-        "Fruit Shoots",
-        "Kids Meal (Chicken goujons, Chips, Drink)"
+        { name: "Chicken Goujons", price: "£5.95" },
+        { name: "Chips", price: "£3.45" },
+        { name: "Fruit Shoots", price: "£1.95" },
+        { name: "Kids Meal (Chicken goujons, Chips, Drink)", price: "£8.95" }
       ]
     }
   ];
@@ -204,12 +204,11 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
     }
   };
 
-  const filteredCategories = menuCategories.map(category => ({
-    ...category,
-    items: category.items.filter(item =>
-      item.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  })).filter(category => category.items.length > 0);
+  const filteredCategories = selectedCategory === "all" 
+    ? menuCategories 
+    : menuCategories.filter(category => 
+        category.title.toLowerCase().replace(/[\s-]/g, '') === selectedCategory.toLowerCase().replace(/[\s-]/g, '')
+      );
 
   const addToCart = (itemName: string, categoryTitle: string) => {
     if (!isAdmin) {
@@ -298,21 +297,28 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
         <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-restaurant-green mb-2">
           Takeaway Menu
         </h1>
-        <p className="text-sm lg:text-base text-muted-foreground">
-          Authentic Hyderabadi Cuisine - Order for pickup
-        </p>
       </div>
 
-      {/* Search */}
+      {/* Category Filter Buttons */}
       <div className="mb-6">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Search menu items..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
+        <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+          <Button 
+            variant={selectedCategory === "all" ? "default" : "outline"}
+            onClick={() => setSelectedCategory("all")}
+            className="mb-2"
+          >
+            All
+          </Button>
+          {menuCategories.map((category) => (
+            <Button 
+              key={category.title}
+              variant={selectedCategory === category.title.toLowerCase().replace(/[\s-]/g, '') ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category.title.toLowerCase().replace(/[\s-]/g, ''))}
+              className="mb-2"
+            >
+              {category.title}
+            </Button>
+          ))}
         </div>
       </div>
 
@@ -338,14 +344,19 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
                     {category.items.map((item, itemIndex) => (
                       <div key={itemIndex}>
                         <div className="flex justify-between items-center">
-                          <p className="text-sm lg:text-base text-foreground font-medium">
-                            {item}
-                          </p>
+                          <div className="flex-1">
+                            <p className="text-sm lg:text-base text-foreground font-medium">
+                              {item.name}
+                            </p>
+                            <p className="text-sm text-muted-foreground font-semibold">
+                              {item.price}
+                            </p>
+                          </div>
                           {isAdmin && (
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => addToCart(item, category.title)}
+                              onClick={() => addToCart(item.name, category.title)}
                               className="ml-2"
                             >
                               <Plus className="h-3 w-3" />
