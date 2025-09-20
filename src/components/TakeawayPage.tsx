@@ -128,6 +128,24 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
       ]
     },
     {
+      title: "Sides2",
+      items: [
+        { name: "Plain Naan", price: "£2.95" },
+        { name: "Butter Naan", price: "£3.45" },
+        { name: "Garlic Naan", price: "£3.95" },
+        { name: "Onion Naan", price: "£3.95" },
+        { name: "Coriander Naan", price: "£3.95" },
+        { name: "Peshawari Naan", price: "£4.45" },
+        { name: "Roti", price: "£2.45" },
+        { name: "Butter Roti", price: "£2.95" },
+        { name: "Papadams", price: "£1.95" },
+        { name: "Egg Fried Rice", price: "£4.95" },
+        { name: "Plain Rice", price: "£3.45" },
+        { name: "Special Bagara Rice", price: "£4.95" },
+        { name: "Pilaf Rice", price: "£4.45" }
+      ]
+    },
+    {
       title: "Extras",
       items: [
         { name: "Curry Sauce", price: "£2.95" },
