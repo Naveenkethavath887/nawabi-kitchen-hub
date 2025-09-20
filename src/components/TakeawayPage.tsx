@@ -20,6 +20,7 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
   const [cart, setCart] = useState<OrderItem[]>([]);
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [collectionTime, setCollectionTime] = useState("");
 
   const menuCategories = [
     {
@@ -210,6 +211,16 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
         category.title.toLowerCase().replace(/[\s-]/g, '') === selectedCategory.toLowerCase().replace(/[\s-]/g, '')
       );
 
+  const getItemPrice = (itemName: string) => {
+    for (const category of menuCategories) {
+      const item = category.items.find(item => item.name === itemName);
+      if (item) {
+        return parseFloat(item.price.replace('£', ''));
+      }
+    }
+    return 0;
+  };
+
   const addToCart = (itemName: string, categoryTitle: string) => {
     if (!isAdmin) {
       toast.error("Only admin can create orders");
@@ -250,6 +261,10 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => total + (getItemPrice(item.name) * item.quantity), 0);
+  };
+
   const handleCreateOrder = async () => {
     if (cart.length === 0) {
       toast.error("Cart is empty");
@@ -285,6 +300,7 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
       setCart([]);
       setCustomerName("");
       setCustomerPhone("");
+      setCollectionTime("");
     } catch (error) {
       console.error('Error creating order:', error);
       toast.error("Failed to create order. Please try again.");
@@ -322,67 +338,110 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+      <div className={`grid gap-6 ${selectedCategory === "all" ? "grid-cols-1 xl:grid-cols-4" : "grid-cols-1"}`}>
         {/* Menu Categories */}
-        <div className="xl:col-span-3">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-            {filteredCategories.map((category, index) => (
-              <Card key={index} className="h-fit">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base lg:text-lg font-semibold text-restaurant-green flex items-center gap-2">
-                    {category.title}
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs px-2 py-1 ${getItemTypeColor(category.title)}`}
-                    >
-                      {category.items.length} items
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-2">
+        <div className={selectedCategory === "all" ? "xl:col-span-3" : "w-full"}>
+          {selectedCategory === "all" ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+              {filteredCategories.map((category, index) => (
+                <Card key={index} className="h-fit">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-base lg:text-lg font-semibold text-restaurant-green flex items-center gap-2">
+                      {category.title}
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs px-2 py-1 ${getItemTypeColor(category.title)}`}
+                      >
+                        {category.items.length} items
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-2">
+                      {category.items.map((item, itemIndex) => (
+                        <div key={itemIndex}>
+                          <div 
+                            className={`flex justify-between items-center p-2 rounded-lg transition-all duration-200 ${
+                              isAdmin ? 'hover:bg-muted/50 hover:shadow-sm cursor-pointer' : ''
+                            }`}
+                            onClick={() => isAdmin && addToCart(item.name, category.title)}
+                          >
+                            <div className="flex-1">
+                              <p className="text-sm lg:text-base text-foreground font-medium">
+                                {item.name}
+                              </p>
+                              <p className="text-sm text-muted-foreground font-semibold">
+                                {item.price}
+                              </p>
+                            </div>
+                          </div>
+                          {itemIndex < category.items.length - 1 && (
+                            <Separator className="my-2 opacity-30" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            /* Fullscreen category view */
+            <div className="space-y-6">
+              {filteredCategories.map((category, index) => (
+                <div key={index} className="w-full">
+                  <div className="mb-6">
+                    <h2 className="text-2xl lg:text-3xl font-bold text-restaurant-green flex items-center gap-3">
+                      {category.title}
+                      <Badge 
+                        variant="outline" 
+                        className={`text-sm px-3 py-1 ${getItemTypeColor(category.title)}`}
+                      >
+                        {category.items.length} items
+                      </Badge>
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {category.items.map((item, itemIndex) => (
-                      <div key={itemIndex}>
-                        <div className="flex justify-between items-center">
-                          <div className="flex-1">
-                            <p className="text-sm lg:text-base text-foreground font-medium">
+                      <Card 
+                        key={itemIndex} 
+                        className={`h-fit transition-all duration-200 ${
+                          isAdmin ? 'hover:shadow-lg hover:scale-105 cursor-pointer' : ''
+                        }`}
+                        onClick={() => isAdmin && addToCart(item.name, category.title)}
+                      >
+                        <CardContent className="p-4">
+                          <div className="text-center">
+                            <h3 className="text-base lg:text-lg font-semibold text-foreground mb-2">
                               {item.name}
-                            </p>
-                            <p className="text-sm text-muted-foreground font-semibold">
+                            </h3>
+                            <p className="text-lg font-bold text-restaurant-green">
                               {item.price}
                             </p>
                           </div>
-                          {isAdmin && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => addToCart(item.name, category.title)}
-                              className="ml-2"
-                            >
-                              <Plus className="h-3 w-3" />
-                            </Button>
-                          )}
-                        </div>
-                        {itemIndex < category.items.length - 1 && (
-                          <Separator className="my-2 opacity-30" />
-                        )}
-                      </div>
+                        </CardContent>
+                      </Card>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Admin Cart */}
-        {isAdmin && (
+        {isAdmin && selectedCategory === "all" && (
           <div className="xl:col-span-1">
             <Card className="sticky top-4">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ShoppingCart className="h-5 w-5" />
-                  Cart ({getTotalItems()})
+                <CardTitle className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart className="h-5 w-5" />
+                    Cart ({getTotalItems()})
+                  </div>
+                  <div className="text-sm font-semibold text-restaurant-green">
+                    £{getTotalPrice().toFixed(2)}
+                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -398,6 +457,12 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                   />
+                  <Input
+                    type="time"
+                    placeholder="Collection Time"
+                    value={collectionTime}
+                    onChange={(e) => setCollectionTime(e.target.value)}
+                  />
                 </div>
 
                 <Separator />
@@ -412,6 +477,9 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
                         <div className="flex-1">
                           <p className="font-medium text-sm">{item.name}</p>
                           <p className="text-xs text-muted-foreground">{item.category}</p>
+                          <p className="text-xs text-restaurant-green font-semibold">
+                            £{(getItemPrice(item.name) * item.quantity).toFixed(2)}
+                          </p>
                         </div>
                         <div className="flex items-center gap-2">
                           <Button
@@ -435,12 +503,78 @@ const TakeawayPage = ({ isAdmin }: TakeawayPageProps) => {
                   )}
                 </div>
 
+                {cart.length > 0 && (
+                  <div className="border-t pt-3">
+                    <div className="flex justify-between items-center text-lg font-semibold">
+                      <span>Total:</span>
+                      <span className="text-restaurant-green">£{getTotalPrice().toFixed(2)}</span>
+                    </div>
+                  </div>
+                )}
+
                 <Button 
                   onClick={handleCreateOrder}
                   className="w-full"
                   disabled={cart.length === 0 || !customerName.trim()}
                 >
                   Create Order
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Floating Cart for Category View */}
+        {isAdmin && selectedCategory !== "all" && cart.length > 0 && (
+          <div className="fixed bottom-4 right-4 z-50">
+            <Card className="w-80 max-h-96 overflow-hidden">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart className="h-4 w-4" />
+                    Cart ({getTotalItems()})
+                  </div>
+                  <div className="text-sm font-semibold text-restaurant-green">
+                    £{getTotalPrice().toFixed(2)}
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-2 max-h-32 overflow-y-auto">
+                  {cart.map((item, index) => (
+                    <div key={index} className="flex justify-between items-center text-xs">
+                      <div className="flex-1">
+                        <p className="font-medium">{item.name}</p>
+                        <p className="text-restaurant-green">£{(getItemPrice(item.name) * item.quantity).toFixed(2)}</p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => removeFromCart(item.name)}
+                          className="h-6 w-6 p-0"
+                        >
+                          <Minus className="h-2 w-2" />
+                        </Button>
+                        <span className="text-xs px-2">{item.quantity}</span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => addToCart(item.name, item.category)}
+                          className="h-6 w-6 p-0"
+                        >
+                          <Plus className="h-2 w-2" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <Button 
+                  onClick={() => setSelectedCategory("all")}
+                  className="w-full"
+                  size="sm"
+                >
+                  View Cart
                 </Button>
               </CardContent>
             </Card>
